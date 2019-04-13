@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\Product\ProductResource;
+use App\Http\Resources\Product\ProductCollection;
 use App\Model\Product;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Product::all();
+        return ProductCollection(Product::all());
     }
 
     /**
@@ -47,7 +48,10 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+
         return new ProductResource($product);
+        // this syntax used for get data join with table reviews
+        // return Product::find($product['id'])->reviews;
     }
 
     /**
