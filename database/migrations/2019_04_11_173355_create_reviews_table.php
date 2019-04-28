@@ -14,7 +14,6 @@ class CreateReviewsTable extends Migration
     public function up()
     {
         Schema::create('reviews', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('product_id')->unsigned()->index();
             $table->string('customer');
@@ -22,6 +21,7 @@ class CreateReviewsTable extends Migration
             $table->integer('star');
             $table->timestamps();
         });
+
     }
 
     /**
@@ -31,7 +31,10 @@ class CreateReviewsTable extends Migration
      */
     public function down()
     {
+        Schema::table('reviews', function (Blueprint $table) {
+            $table->dropForeign('reviews_product_id_foreign');
+        });
         Schema::dropIfExists('reviews');
-        $table->dropForeign('reviews_user_id_foreign');
+        Schema::dropIfExists('products');
     }
 }

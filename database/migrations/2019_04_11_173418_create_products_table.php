@@ -20,8 +20,19 @@ class CreateProductsTable extends Migration
             $table->integer('price');
             $table->integer('stock');
             $table->integer('discount');
+            $table->integer('user_id')->unsigned()->index();
             $table->timestamps();
         });
+
+        // create foreign key product id in table reviews
+        Schema::table('reviews', function($table) {
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
+        });
+
+        // create foreign key user id in table products
+        // Schema::table('products', function($table) {
+        //     $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+        // });
     }
 
     /**
@@ -31,6 +42,9 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        // Schema::table('products', function (Blueprint $table) {
+        //     $table->dropForeign('products_user_id_foreign');
+        // });
+        // Schema::dropIfExists('users');
     }
 }
