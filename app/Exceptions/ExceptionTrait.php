@@ -20,7 +20,7 @@ trait ExceptionTrait
             return $this->HttpResponse();
         }
 
-        // return ExceptionHandler::render($request, $exception);
+        return parent::render($request, $e);
     }
 
     protected function isModel($e)
